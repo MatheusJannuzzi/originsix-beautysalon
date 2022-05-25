@@ -1,0 +1,677 @@
+/* ================= RESET ===================*/
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;500;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+/* ================= VARIABLES ===================*/
+:root {
+  --header-height: 4.5rem;
+  /* COLORS */
+  --hue: 159;
+  /* HSL color mode */
+  --base-color: hsl(var(--hue) 36% 57%);
+  --base-color-second: hsl(var(--hue) 65% 88%);
+  --base-color-alt: hsl(var(--hue) 57% 53%);
+  --title-color: hsl(var(--hue) 41% 10%);
+  --text-color: hsl(0 0% 46%);
+  --text-color-light: hsl(0 0% 98%);
+  --body-color: hsl(0 0% 98%);
+  /* FONTS */
+  --title-font-size: 1.875rem;
+  --subtitle-font-size: 1rem;
+  --title-font: 'Poppins', sans-serif;
+  --body-font: 'DM Sans', sans-serif;
+}
+
+/* ================= BASE ===================*/
+html {
+  scroll-behavior: smooth;
+  /* após o clique para a parte da página pretendida, fará um descolamento suave, invés de ir abruptamente */
+}
+
+body {
+  font: 400 1rem var(--body-font);
+  color: var(--text-color);
+  background-color: var(--body-color);
+  -webkit-font-smoothing: antialiased;
+  /* aplica propriedade font-smoothing em navegadores tipo webkit (chrome é webkit) */
+}
+
+.title {
+  font: 700 var(--title-font-size) var(--title-font);
+  /* 1.875rem = 30px*/
+  color: var(--title-color);
+  -webkit-font-smoothing: auto;
+}
+
+.button {
+  background-color: var(--base-color);
+  color: var(--text-color-light);
+  height: 3.5rem;
+  /* 56px/16px = 3.5rem */
+  display: inline-flex;
+  /* inline = tamanho do conteúdo escrito, flex = habilita outras funcionalidades */
+  align-items: center;
+  /* possível por causa do "flex" no elemento anterior */
+  padding: 0 2rem;
+  /* 32px = 2rem */
+  border-radius: 0.25rem;
+  /* 4px = 0.25rem */
+  font: 500 1rem var(--body-font);
+  transition: background 0.3s;
+}
+
+.button:hover {
+  background: var(--base-color-alt);
+}
+
+.divider-1 {
+  height: 1px;
+  background: linear-gradient(270deg,
+      hsla(var(--hue), 36%, 57%, 1),
+      hsla(var(--hue), 65%, 88%, 0.34));
+}
+
+.divider-2 {
+  height: 1px;
+  background: linear-gradient(270deg,
+      hsla(var(--hue), 65%, 88%, 0.34),
+      hsla(var(--hue), 36%, 57%, 1));
+}
+
+/* ================= LAYOUT ===================*/
+.container {
+  margin-left: 1.5rem;
+  /* 24px  1rem = 16px*/
+  margin-right: 1.5rem;
+  /* 24px  1rem = 16px*/
+}
+
+.grid {
+  display: grid;
+  gap: 2rem; /* 2rem = 32px (16px cada 1rem)*/
+}
+
+.section {
+  padding: calc(5rem + var(--header-height)) 0; /* 80px/16px = 5rem*/
+}
+
+.section .title {
+  margin-bottom: 1rem; /* 16px */
+}
+
+.section .subtitle{
+  font-size: var(--subtitle-font-size);
+}
+
+.section header {
+  margin-bottom: 4rem; /* 64px / 16px = 4rem */
+}
+
+.section header strong {
+  color: var(--base-color);
+}
+
+#header {
+  border-bottom: 1px solid #e4e4e4;
+  margin-bottom: 2rem; /* 32px = 2rem */
+  display: flex; /* header ficar preso no topo da página */
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: var(--body-color);
+}
+
+#header.scroll {
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ================= LOGO ===================*/
+.logo {
+  font: 700 1.31rem var(--title-font); /* 21px/16px = 1.31rem */
+  color: var(--title-color);
+}
+
+.logo span {
+  color: var(--base-color);
+}
+
+.logo-alt span {
+  color: var(--body-color);
+}
+
+/* ================= NAVIGATION ===================*/
+nav {
+  width: 100%; /* por causa do display flex do elemento pai, é necessário para garantir a posição */
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+nav ul li {
+  text-align: center;
+}
+
+nav ul li a {
+  transition: color 0.2s;
+  position: relative; /* necessário para o position:absolute do (nav ul li a:hover::after) funcionar*/
+}
+
+nav ul li a:hover, nav ul li a.active { /* 'nav ul li a.active' para javascript*/
+  color: var(--base-color);
+}
+
+nav ul li a::after { 
+  content: '';
+  width: 0%;
+  height: 2px;
+  background: var(--base-color);
+  position: absolute;
+  left: 0;
+  bottom: -1.5rem;
+  transition: width 0.2s;
+}
+
+nav ul li a:hover::after, nav ul li a.active::after { /* 'nav ul li a.active::after' para javascript*/
+  width: 100%;
+
+}
+
+nav .menu {
+  opacity: 0;
+  visibility: hidden;
+  top: -20rem;
+  transition: 0.2s;
+}
+
+nav .menu ul {
+  display: none;
+}
+
+/* SHOW MENU */
+nav.show .menu { /* nav.show (sem espaço, para pegar a classe dentro do da tag nav, não a classe filho */
+  display: grid;
+  place-content: center;
+  opacity: 1;
+  visibility: visible;
+  background: var(--body-color);
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0; /* top 0 e left 0 + fixed = posicionamento fixo no canto superior esquerdo */
+  left: 0;
+}
+
+nav.show .menu ul {
+  display: grid;
+}
+
+nav.show ul.grid {  /* alteração feita pela especificidade 0,2,2 (maior que .grid linha 90 com especificidade 0,1,0)*/
+  gap: 4rem; /* 64px / 16px = 4rem*/
+}
+
+/* TOGGLE MENU */
+.toggle {
+  color: var(--base-color);
+  font-size: 1.5rem;
+  /*24px*/
+  cursor: pointer;
+}
+
+nav .icon-close {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: -1.5rem;
+  right: 1.5rem;
+  /*24px*/
+  transition: 0.2s;
+}
+
+nav.show div.icon-close {
+  visibility: visible;
+  opacity: 1;
+  top: 1.5rem;
+}
+
+/* ================= HOME ===================*/
+#home {
+  overflow: hidden; /* mantém no limite da página */
+}
+
+#home .container {
+  margin: 0;
+}
+
+#home .image {
+  position: relative; /* necessário para habilitar o position:absolute nos outros elementos */
+}
+
+#home .image::before {
+  /* cria um conteúdo antes do img */
+  content: '';
+  /* conteúdo vazio */
+  width: 100%;
+  height: 100%;
+  background: var(--base-color-second);
+  position: absolute;
+  /* funciona por causa do position: relative no elemento pai anterior*/
+  top: -16.8%;
+  /* 68*100/405 se 405px(width) é igual a 100%, 68px é 16.8%*/
+  left: 16.7%;
+  /* 97*100/581 se 581px(height) é igual a 100%, 97px é 16.7%*/
+  z-index: 0;
+  /* habilitado por causa do position */
+}
+
+#home .image img {
+  position: relative;
+  /* habilita novas funcionalidades do css */
+  right: 2.93rem;
+  /* (right habilitado por causa do position) - 47px/16px = 2.93 rem */
+}
+
+#home .image img, #home .image::before {
+  border-radius: 0.25rem;
+  /* 4px = 0.25rem */
+}
+
+#home .text {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+  text-align: center;
+}
+
+#home .text h1 {
+  margin-bottom: 1rem;
+  /* 16px = 1rem */
+}
+
+#home .text p {
+  margin-bottom: 2rem;
+  /* 32px = 2rem */
+  max-width: 100%;
+}
+
+/* ================= ABOUT ===================*/
+#about {
+  background: white;
+}
+
+#about .container {
+  margin: 0;
+}
+
+#about .image {
+  position: relative;
+  /* necessário para habilitar o position:absolute nos outros elementos */
+}
+
+#about .image::before {
+  /* cria um conteúdo antes do img */
+  content: '';
+  /* conteúdo vazio */
+  width: 100%;
+  height: 100%;
+  background: var(--base-color-second);
+  position: absolute;
+  /* funciona por causa do position: relative no elemento pai anterior*/
+  top: -8.3%;
+  /* 34*100/405 se 405px(width) é igual a 100%, 68px é 8.3%*/
+  left: -33%;
+  /* 192*100/581 se 581px(height) é igual a 100%, 192px é 33%*/
+  z-index: 0;
+  /* habilitado por causa do position */
+}
+
+#about .image img {
+  position: relative;
+  /* habilita novas funcionalidades do css */
+}
+
+#about .image img, #about .image::before {
+  border-radius: 0.25rem;
+  /* 4px = 0.25rem */
+}
+
+#about .text {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+/* ================= SERVICES ===================*/
+.cards.grid {
+  gap: 1.5rem;
+}
+
+.card {
+  padding: 3.625rem 2rem;
+  /* 58px / 16px = 3.625rem (em cima e em baixo) e 32px / 16px = 2rem (nas laterais)*/
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.08);
+  border-bottom: 0.25rem solid var(--base-color);
+  border-radius: 0.25rem 0.25rem 0 0;
+  text-align: center;
+}
+
+.card i {
+  display: block;
+  margin-bottom: 1.5rem;
+  font-size: 5rem;
+  /* 80px / 16px = 5rem */
+  color: var(--base-color);
+}
+
+.card .title {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+  /* 12px / 16px = 0.75rem*/
+}
+
+/* ================= TESTIMONIALS ===================*/
+#testimonials {
+  background: white;
+}
+
+#testimonials .container {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+#testimonials header {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+  margin-bottom: 0;
+}
+
+#testimonials blockquote {
+  padding: 2rem;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 0.25rem;
+}
+
+#testimonials blockquote p {
+  position: relative;
+  text-indent: 1.875rem;
+  /*identação de texto (espaço para iniciar o texto, espaço de início de email)*/
+  margin: 1.5rem;
+  color: var(--title-color);
+}
+
+#testimonials blockquote p span {
+  font: 700 2.5rem serif;
+  /* 48px / 16px = 3rem*/
+  position: absolute;
+  top: -0.375rem;
+  left: -1.875rem;
+  color: var(--base-color);
+}
+
+#testimonials cite {
+  display: flex;
+  align-items: center;
+  font-style: normal;
+}
+
+#testimonials cite img {
+  width: 2rem;
+  height: 2rem;
+  object-fit: cover;
+  /* pega imagens dentro da tag img e encaixe cobrindo todo o espaço disponível */
+  clip-path: circle();
+  /* faz um círculo na imagem */
+  margin-right: 0.5rem;
+  /* 8px / 16px = 0.5rem*/
+}
+
+/* SWIPER */
+.swiper-slide {
+  height: auto;
+  padding: 4rem 1rem;
+}
+
+.swiper-pagination-bullet {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.swiper-pagination-bullet-active {
+  background: var(--base-color);
+}
+
+
+/* ================= CONTACT ===================*/
+#contact .grid {
+  gap: 4rem;
+}
+
+#contact .text p {
+  margin-bottom: 2rem;
+}
+
+#contact .button i,
+#contact ul li i {
+  font-size: 1.5rem;
+  margin-right: 0.625rem;
+  /* 10px / 16px = 0.625rem*/
+}
+
+#contact ul.grid {
+  gap: 2rem;
+}
+
+#contact ul li {
+  display: flex;
+  align-items: center;
+}
+
+#contact ul li i {
+  color: var(--base-color);
+}
+
+/* ================= FOOTER ===================*/
+footer {
+  background: var(--base-color);
+}
+
+footer.section{
+  padding: 4rem 0;
+}
+
+footer .logo {
+  display: inline-block;
+  /* elemento a pelo browser é automaticamente inline, para fazer o margin funcionar é necessário inserir o "block" */
+  margin-bottom: 1.5rem;
+}
+
+footer .brand p {
+  color: var(--text-color-light);
+  margin-bottom: 0.75rem;  /* 12px - 16px = 0.75rem*/
+}
+
+footer i {
+  font-size: 1.5rem;
+  color: var(--text-color-light);
+}
+
+footer .social{
+  grid-auto-flow: column; /* transforma conteúdo em colunas*/
+  width: fit-content; /* ajuste/encaixe do conteúdo */
+}
+
+footer .social a {
+  transition: 0.3s;
+  display: inline-block;/* display inline do elemento 'a' não recebe o translate, é preciso inserir o block para funcionar*/
+  margin-right: 2rem;
+}
+
+footer .social a:hover{
+  transform: translateY(-8px);
+}
+
+/* ================= BACK TO TOP ===================*/
+.back-to-top{
+  background: var(--base-color);
+  color: var(--text-color-light);
+  position: fixed; /* fica fixo na página, mesmo rolando para outras seções */
+  right: 1rem;
+  bottom: 1rem;
+  padding: 0.5rem;
+  clip-path: circle();
+  font-size: 1.5rem; /* tamanho da seta */
+  line-height: 0; /* tirar altura da lina, para ficar alinhado */
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.2s;
+  transform: translateY(100%); /* junto com o transform do '.back-to-top.show' faz com que o item esconda e apareça após rolagem de tela (é preciso do transition para funcionar)*/
+}
+
+.back-to-top.show{
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ================= MEDIA QUERIES ===================*/
+/* extra large devices: 1200 > */
+@media (min-width: 1200px){
+  /* REUSABLE CLASSES */
+  .container{
+    max-width: 1120px; /* início da logo até o final das sessões (Contato)*/
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section {
+    padding: 10rem 0; /* 160px / 16px = 10rem */
+  }
+
+  .section header, #testimonials header{
+    max-width: 32rem;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .button{
+    height: 3.125rem; /* 50px / 16px = 3.125rem*/
+  }
+
+  /* NAVIGATION MENU */
+  nav .menu{
+    opacity: 1;
+    visibility: visible;
+    top: 0;
+  }
+
+  nav .menu ul{
+    display: flex;
+    gap: 2rem;
+  }
+
+  nav .menu ul li a.title{
+    font: 400 1rem var(--body-font);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  nav .menu ul li a.title.active{
+    font-weight: bold;
+    -webkit-font-smoothing: auto;
+  }
+
+  nav .icon-menu{
+    display: none;
+  }  
+
+  /* LAYOUT */
+  main {
+    margin-top: var(--header-height);
+  }
+
+  /* HOME */
+  #home .container{
+    grid-auto-flow: column;
+    justify-content: space-between;
+    margin: 0 auto;
+  }
+
+  #home .image{
+    order: 1; /* 'order' só é possivel por causa do elemento estar dentro de um grid */
+  }
+
+  #home .text{
+    order: 0;
+    max-width: 24rem; /* 396px / 16px = 24rem */
+    text-align: left;
+  }
+
+  /* ABOUT */
+  #about .container{
+    grid-auto-flow: column;
+    margin: 0 auto;
+  }
+
+  /* SERVICES */
+  .cards{
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  /* TESTIMONIALS */
+  #testimonials .container{
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* CONTACT */
+  #contact .container{
+    grid-auto-flow: column;
+    align-items: center;
+  }
+
+  #contact .text{
+    max-width: 25rem; /* 404px / 16px = 25rem*/
+  }
+
+  /* FOOTER */
+  footer.section {
+    padding: 3.75rem 0; /* 60px / 16px = 3.75rem*/
+  }
+
+  footer .container {
+    grid-auto-flow: column;
+    align-items: center;
+    justify-content: space-between;
+  }  
+
+  footer .logo {
+    font-size: 2.25rem;
+  }  
+}
+
+/* large devices: 992 */
+@media (min-width: 992px) {
+  :root{
+    --title-font-size: 2.25rem; /* 36px / 16px = 2.25rem */
+    --subtitle-font-size: 1.125rem; /* 18px / 16px = 1.125rem */
+  }
+}
